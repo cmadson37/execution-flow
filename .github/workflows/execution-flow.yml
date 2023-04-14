@@ -36,7 +36,7 @@ jobs:
         id: run-tests
         run: npm run test
       - name: debug results
-        run: echo ${{ steps }}
+        run: echo "${{ toJSON(steps) }}"
       - name: Upload test report
         if: failure() && ${{ steps.run-tests.conclusion == 'failure' }}
         uses: actions/upload-artifact@v3
