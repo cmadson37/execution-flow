@@ -81,3 +81,11 @@ jobs:
         uses: geekyeggo/delete-artifact@v2
         with:
           name: dist-files
+  report:
+    if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+      - run: |
+          echo "something went wrong"
+          echo ${{ github }}
