@@ -7,8 +7,18 @@ on:
         required: false
         default: dist
         type: string
+    outputs:
+      result:
+        description: The result of this workflow
+        value: ${{ jobs.deploying.outputs.outcome }}
+    # secrets:
+    # some-secret:
+    # required: true
+
 jobs:
   deploying:
+    outputs:
+      outcome: ${{ steps.set-result.outputs.step-result }}
     runs-on: ubuntu-latest
     steps:
       - name: Get build artifacts
@@ -19,6 +29,9 @@ jobs:
         run: ls
       - name: Output information
         run: echo "Deploying & uploading..."
+      - name: Set (fake) result output
+        id: set-result
+        run: echo "step-result=success" >> $GITHUB_OUTPUT
       - name: Cleanup artifacts
         uses: geekyeggo/delete-artifact@v2
         with:
